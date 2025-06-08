@@ -2,13 +2,13 @@ package com.librarymanagement.backend.controller;
 
 import com.librarymanagement.backend.model.Book;
 import com.librarymanagement.backend.service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*") // Allow requests from any origin
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -28,9 +28,9 @@ public class BookController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Book addBook(@RequestBody Book book) {
-        return bookService.addBook(book);
+    @PostMapping("/add-book")
+    public ResponseEntity<Book> addBook(@Valid @RequestBody Book book) {
+        return ResponseEntity.ok(bookService.addBook(book));
     }
 
     @DeleteMapping("/{id}")

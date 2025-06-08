@@ -21,10 +21,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        User user = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
+        User user = userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
         if (user != null) {
-            String token = jwtUtil.generateToken(user.getUsername()); // Generate JWT token
-            return ResponseEntity.ok().body(new LoginResponse(token)); // Return token in response
+            String token="Success";
+            //String token = jwtUtil.generateToken(user.getUsername()); // Generate JWT token
+            return ResponseEntity.ok().body(user); // Return token in response
         } else {
             return ResponseEntity.status(401).body("Invalid credentials");
         }

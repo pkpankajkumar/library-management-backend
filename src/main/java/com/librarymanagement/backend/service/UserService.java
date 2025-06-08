@@ -27,11 +27,11 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new IllegalArgumentException("Username already exists");
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new IllegalArgumentException("user email already exists");
         }
         // Hash the password before saving to the database
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
         return userRepository.save(user);
     }
 
@@ -39,9 +39,9 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User authenticateUser(String username, String password) {
-        User user = userRepository.findByUsername(username);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+    public User authenticateUser(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user != null && email.equals(user.getEmail()) && password.equals(user.getPassword())) {
             return user;
         }
         return null;

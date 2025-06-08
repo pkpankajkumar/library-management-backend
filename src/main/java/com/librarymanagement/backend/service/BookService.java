@@ -23,6 +23,7 @@ public class BookService {
     }
 
     public Book addBook(Book book) {
+        // System.out.println("Book"+book);
         return bookRepository.save(book);
     }
 

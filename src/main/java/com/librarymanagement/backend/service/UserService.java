@@ -26,6 +26,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+
     public User addUser(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("user email already exists");

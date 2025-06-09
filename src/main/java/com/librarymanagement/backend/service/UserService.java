@@ -35,6 +35,25 @@ public class UserService {
         user.setPassword(user.getPassword());
         return userRepository.save(user);
     }
+    public User updateUser(Long id, User updatedUser) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
+
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setPassword(updatedUser.getPassword());
+        existingUser.setName(updatedUser.getName());
+        existingUser.setMobileNo(updatedUser.getMobileNo());
+
+        if(updatedUser.getRole().equals("admin")){
+            existingUser.setRole("admin");
+        }else{
+            existingUser.setRole("user");
+        }
+        // use encoder if needed
+
+        return userRepository.save(existingUser);
+    }
+
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
